@@ -61,7 +61,8 @@ export function App() {
           .map(function (coin) {
             return (
               <li key={coin.id}>
-                {coin.symbol}-{coin.rank}
+                {coin.symbol}-{coin.rank}: {coin.name} ($
+                {Math.round(coin.priceUsd * 100) / 1000})
               </li>
             )
           })}
