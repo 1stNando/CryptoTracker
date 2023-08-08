@@ -49,13 +49,15 @@ export function App() {
         <h1>Hello Crypto.</h1>
       </header>
       <ul>
-        {coins.map(function (coin) {
-          return (
-            <li key={coin.id}>
-              {coin.symbol}-{coin.rank}
-            </li>
-          )
-        })}
+        {coins
+          .filter((coin) => coin.rank <= 10)
+          .map(function (coin) {
+            return (
+              <li key={coin.id}>
+                {coin.symbol}-{coin.rank}
+              </li>
+            )
+          })}
       </ul>
     </div>
   )
