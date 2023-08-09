@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import logo from '/src/logo.svg'
 
 type CoinType = {
   id: string
@@ -9,12 +10,37 @@ type CoinType = {
   priceUsd: number
 }
 
+type CoinIconType = {
+  [symbol: string]: string
+}
+
 export function App() {
   //  Teaches TypeScript the shape of our API.
   const [coins, setCoins] = useState<CoinType[]>([])
 
   // Add STATE for changes in cycles or fetching.
   const [cycles, setCycles] = useState<number>(0)
+
+  // ImageFetching for logo of coins
+  const [coinIcons, setCoinIcons] = useState<CoinIconType>({})
+  // ImageFetching function:
+  const fetchCoinIcons = async () => {
+    const response = await axios.get(
+      `https://images.coinviewer.io/currencies/64x64/${coinIcons}`
+    )
+    if (response.status === 200) {
+      const icons: CoinIconType = {}
+
+      for (const file of response.data) {
+        const symbol = file.name.replace('.png', '')
+        icons[symbol] = file.download_url
+      }
+      setCoinIcons(icons)
+    }
+  }
+  useEffect(() => {
+    fetchCoinIcons()
+  }, [])
 
   function loadAllData() {
     async function fetchListOfCoins() {
@@ -53,7 +79,10 @@ export function App() {
   return (
     <div className="main">
       <header>
-        <h1>Hello Crypto.</h1>
+        <h1>
+          Hello Crypto.
+          <img src={logo} height="42" alt="logo" />
+        </h1>
       </header>
       <ul>
         {coins
@@ -61,6 +90,11 @@ export function App() {
           .map(function (coin) {
             return (
               <li key={coin.id}>
+                <img
+                  src={coinIcons[coin.symbol || '']}
+                  alt={`${coin.symbol} logo`}
+                  className="coin-icon"
+                />
                 {coin.symbol}-{coin.rank}: {coin.name} ($
                 {Math.round(coin.priceUsd * 100) / 1000})
               </li>
