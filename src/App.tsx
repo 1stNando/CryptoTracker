@@ -21,27 +21,6 @@ export function App() {
   // Add STATE for changes in cycles or fetching.
   const [cycles, setCycles] = useState<number>(0)
 
-  // ImageFetching for logo of coins
-  const [coinIcons, setCoinIcons] = useState<CoinIconType>({})
-  // ImageFetching function:
-  const fetchCoinIcons = async () => {
-    const response = await axios.get(
-      `https://images.coinviewer.io/currencies/64x64/${coinIcons}`
-    )
-    if (response.status === 200) {
-      const icons: CoinIconType = {}
-
-      for (const file of response.data) {
-        const symbol = file.name.replace('.png', '')
-        icons[symbol] = file.download_url
-      }
-      setCoinIcons(icons)
-    }
-  }
-  useEffect(() => {
-    fetchCoinIcons()
-  }, [])
-
   function loadAllData() {
     async function fetchListOfCoins() {
       const response = await axios.get('https://api.coincap.io/v2/assets')
