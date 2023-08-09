@@ -10,10 +10,6 @@ type CoinType = {
   priceUsd: number
 }
 
-type CoinIconType = {
-  [symbol: string]: string
-}
-
 export function App() {
   //  Teaches TypeScript the shape of our API.
   const [coins, setCoins] = useState<CoinType[]>([])
@@ -61,6 +57,7 @@ export function App() {
         <h1>
           Hello Crypto.
           <img src={logo} height="42" alt="logo" />
+          Fetches your data every 10's
         </h1>
       </header>
       <ul>
@@ -69,17 +66,15 @@ export function App() {
           .map(function (coin) {
             return (
               <li key={coin.id}>
-                <img
-                  src={coinIcons[coin.symbol || '']}
-                  alt={`${coin.symbol} logo`}
-                  className="coin-icon"
-                />
                 {coin.symbol}-{coin.rank}: {coin.name} ($
                 {Math.round(coin.priceUsd * 100) / 1000})
               </li>
             )
           })}
       </ul>
+      <footer>
+        Made by Fernando, in August 2023. With Suncoast Developer's Guild.
+      </footer>
     </div>
   )
 }
