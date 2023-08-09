@@ -57,7 +57,7 @@ export function App() {
         <h1>
           Hello Crypto.
           <img src={logo} height="42" alt="logo" />
-          Fetches your data every 10's
+          Fetches your data every 10s
         </h1>
       </header>
       <ul>
@@ -73,7 +73,7 @@ export function App() {
           })}
       </ul>
       <footer>
-        Made by Fernando, in August 2023. With Suncoast Developer's Guild.
+        Made by Fernando, in August 2023. With Suncoast Developers Guild.
       </footer>
     </div>
   )
